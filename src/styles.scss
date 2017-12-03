@@ -2,10 +2,11 @@
 
 /* Bulma */
 // 1. Import the initial variables
-@import "~bulma/sass/utilities/initial-variables";
-@import "~bulma/sass/utilities/functions";
+// @import "~bulma/sass/utilities/initial-variables";
+// @import "~bulma/sass/utilities/functions";
 
 // 6. Import the rest of Bulma
-@import "~bulma"
+// @import "~bulma"
 
 
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
