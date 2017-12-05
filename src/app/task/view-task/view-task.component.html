@@ -1,0 +1,158 @@
+
+<mat-grid-list cols="8">
+  <mat-grid-tile colspan="5">
+    <mat-card>
+      <!-- <mat-card-header class="task-header">
+        <mat-card-title>
+          {{ task.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Posted by {{ task.postedBy }} on {{ task.createdAt | date:'short' }}
+        </mat-card-subtitle>
+        <img mat-card-avatar src="{{ getTaskImage(task.platform) }}">
+      </mat-card-header> -->
+
+      <mat-card-title-group>
+        <mat-card-title>{{ task.title }}</mat-card-title>
+        <mat-card-subtitle>{{ task.description }}</mat-card-subtitle>
+        <img mat-card-lg-image src="{{ getTaskImage(task.platform) }}">
+      </mat-card-title-group>
+      
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon style="margin-right: 15px;">supervisor_account</mat-icon>
+                <span>Requester: {{ requester?.data?.attributes?.name }}</span>
+                
+              </mat-panel-title>
+              <mat-panel-description>
+                ID: {{ requester?.data?.id }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          
+            <p>This is the primary content of the panel.</p>
+            <mat-table #requesterInfo [dataSource]="requesterDataSource">
+
+              <ng-container matColumnDef="filter">
+                <mat-header-cell *matHeaderCellDef>Filter</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.filter }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="reviews">
+                <mat-header-cell *matHeaderCellDef>Reviews</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.comm[2] }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="reward">
+                <mat-header-cell *matHeaderCellDef>Reward</mat-header-cell>
+                <mat-cell *matCellDef="let element">${{ element.reward[0] * 3600 / element.reward[1] | number:'1.2-2' }}/hour</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="pending">
+                <mat-header-cell *matHeaderCellDef>Average Time Pending</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.pending * 3600 }} hours</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="comm">
+                <mat-header-cell *matHeaderCellDef>Communication</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ (element.comm[1] == 0) ? ("N/A") : (element.comm[0] + " / " + element.comm[1]) }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="recommend">
+                <mat-header-cell *matHeaderCellDef>Recommend</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ (element.recommend[1] == 0) ? ("N/A") : (element.recommend[0] + " / " + element.recommend[1]) }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="rejected">
+                <mat-header-cell *matHeaderCellDef>Rejected</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.rejected[0] + element.rejected[1] }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="tos">
+                <mat-header-cell *matHeaderCellDef>TOS</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.tos[0] }}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="broken">
+                <mat-header-cell *matHeaderCellDef>Broken</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.broken[0] }}</mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-list>
+          <mat-list-item>
+            <mat-icon mat-list-icon>account_box</mat-icon>
+            <h4 mat-line>Posted by {{ task.postedBy }}</h4>
+            <p mat-line>{{ task.createdAt | date:'medium' }}</p>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon style="margin-right: 15px;" mat-list-icon>label_outline</mat-icon>
+            <!-- <h4 mat-line> -->
+              <mat-chip-list *ngFor="let category of task.categories">
+                <mat-chip>{{ category }}</mat-chip>
+              </mat-chip-list>
+            <!-- </ h4> -->
+            
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>link</mat-icon>
+            <a mat-line target="_blank" href="{{ task.url }}">
+              Preview Task
+            </a>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>attach_money</mat-icon>
+            <h4 mat-line>{{ task.payout | number:'1.2-2' }}</h4>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>timer</mat-icon>
+            <h4 mat-line>{{ getAverageTime(task) | number:'1.0-0' }} min</h4>
+            
+          </mat-list-item>
+
+          <mat-list-item>
+            <button mat-raised-button (click)="toggleAddTime()" *ngIf="!isAddingTime; else addTimeBlock">Add Your Time</button>
+            <ng-template #addTimeBlock>
+              <mat-form-field>
+                <input matInput placeholder="Your Time (min)">
+              </mat-form-field>
+              <button mat-raised-button color="primary" (click)="toggleAddTime()">Submit</button>
+            </ng-template>
+            
+          </mat-list-item>
+          
+
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>        
+        <button mat-button>
+          <mat-icon color="primary">thumb_up</mat-icon>
+          {{ task.numLikes }} Likes
+        </button>
+        <button mat-button>
+          <mat-icon color="primary">launch</mat-icon>
+          {{ task.numShares }} Shares
+        </button>
+        <button mat-button>
+          <mat-icon color="warn">flag</mat-icon>
+          Mark Expired
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="3">
+    <chatbox></chatbox>
+  </mat-grid-tile>
+</mat-grid-list>

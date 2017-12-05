@@ -1,0 +1,49 @@
+::ng-deep chatbox {
+    width: 100% !important;
+    height: 100% !important;
+}
+mat-card {
+    margin: 20px;
+    width: 90% !important;
+    min-height: 700px;
+    max-height: 700px;
+    // height: 70% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .chat-content {
+        flex-grow: 2;
+    }
+
+    .chat-form {
+        flex-grow: 0;
+        align-self: flex-end;
+        width: 100%;
+        form {
+            width: 100%;
+    
+            display: flex;
+            justify-content: space-between;
+    
+            mat-form-field {
+                width: 100%;
+    
+                align-content: flex-end;
+                
+                ::ng-deep .mat-input-wrapper {
+                    align-self: flex-end;
+                }
+    
+            }
+    
+            button {
+                align-self: flex-end;
+                margin: 20px;
+            }
+           
+        }
+    }
+
+    
+}

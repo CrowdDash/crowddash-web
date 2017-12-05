@@ -1,0 +1,26 @@
+
+
+mat-grid-list {
+    height: 100% !important;
+}
+
+mat-grid-tile {
+    height: 100% !important;
+
+    ::ng-deep figure {
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+    }
+}
+
+mat-card {
+    margin: 20px;
+    width: 100%;
+}
+
+mat-list-item {
+    a {
+        text-decoration: none !important;
+        color: inherit;
+    }
+}

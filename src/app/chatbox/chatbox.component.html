@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-title>
+    Task Chatroom
+  </mat-card-title>
+  <div class="chat-content">
+    <mat-list>
+      <mat-list-item *ngFor="let message of chat">
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <h4 mat-line>{{ message }}</h4>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="chat-form">
+    <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input matInput placeholder="Type a message..." [(ngModel)]="curMessage" name="curMessage">
+        <!-- <textarea matInput placeholder="Type a message..." rows="1" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="1" [(ngModel)]="curMessage" name="curMessage"></textarea> -->
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Send</button>
+    </form>
+  </div>
+  
+  
+</mat-card>

@@ -1,0 +1,55 @@
+<div class="form-container">
+  
+  <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+      <input matInput required placeholder="Title" [(ngModel)]="task.title" name="title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required placeholder="URL" type="url" [(ngModel)]="task.url" name="url">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput required placeholder="Requester ID" [(ngModel)]="task.requesterId" name="requesterId">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select required placeholder="Platform" [(ngModel)]="task.platform" name="platform">
+        <mat-option *ngFor="let platform of platforms" [value]="platform.value">
+          {{ platform.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select required placeholder="Category" [formControl]="categoriesControl" name="platform" multiple>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field >
+      <textarea matInput placeholder="Description" matTextareaAutosize rows="4" matAutosizeMinRows="4" [(ngModel)]="task.description" name="description"></textarea>
+    </mat-form-field>
+
+    
+
+    <mat-form-field>
+      <input matInput placeholder="Payout" type="number" [(ngModel)]="task.payout" name="payout">
+      <span matPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Alotted Time (mins)" [(ngModel)]="task.alottedTime" name="alottedTime">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" color="primary" [disabled]="!taskForm.form.valid">
+      Create
+    </button>
+
+  </form>
+  
+  
+</div>

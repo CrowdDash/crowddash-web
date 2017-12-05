@@ -1,0 +1,12 @@
+
+mat-grid-tile {
+    ::ng-deep figure {
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+    }
+
+    ::ng-deep task-list {
+        padding: 20px;
+        width: 100%;
+    }
+}

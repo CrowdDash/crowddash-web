@@ -8,5 +8,11 @@
 // 6. Import the rest of Bulma
 // @import "~bulma"
 
+// reset
+@import "~normalize-scss/sass/normalize/import-now";
 
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+// angular material
+@import "~@angular/material/prebuilt-themes/deeppurple-amber";
+
+// our theme
+@import "app-theme";
